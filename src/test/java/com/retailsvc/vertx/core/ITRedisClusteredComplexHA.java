@@ -2,7 +2,7 @@ package com.retailsvc.vertx.core;
 
 import com.retailsvc.vertx.spi.cluster.redis.RedisClusterManagerTestFactory;
 import com.retailsvc.vertx.spi.cluster.redis.RedisTestContainerFactory;
-import io.vertx.core.ComplexHATest;
+import io.vertx.tests.ha.ComplexHATest;
 import io.vertx.core.spi.cluster.ClusterManager;
 import org.junit.Rule;
 import org.testcontainers.containers.GenericContainer;

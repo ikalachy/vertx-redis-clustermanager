@@ -3,7 +3,7 @@ package com.retailsvc.vertx.spi.cluster.redis.impl.codec;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.vertx.core.buffer.impl.BufferImpl;
-import io.vertx.core.shareddata.impl.ClusterSerializable;
+import io.vertx.core.shareddata.ClusterSerializable;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
@@ -36,7 +36,7 @@ public class ClusterSerializableCodec extends ClassLoaderCodec {
             throw new IOException(
                 className + " does not implement " + ClusterSerializable.class.getName());
           }
-          ((ClusterSerializable) object).readFromBuffer(buf.readerIndex(), BufferImpl.buffer(buf));
+          ((ClusterSerializable) object).readFromBuffer(buf.readerIndex(), new BufferImpl(buf));
           return object;
         } catch (InstantiationException
             | IllegalAccessException
@@ -56,7 +56,7 @@ public class ClusterSerializableCodec extends ClassLoaderCodec {
         String className = in.getClass().getName();
         out.writeInt(className.length());
         out.writeCharSequence(className, StandardCharsets.UTF_8);
-        ((ClusterSerializable) in).writeToBuffer(BufferImpl.buffer(out));
+        ((ClusterSerializable) in).writeToBuffer(new BufferImpl(out));
         return out;
       };
 
