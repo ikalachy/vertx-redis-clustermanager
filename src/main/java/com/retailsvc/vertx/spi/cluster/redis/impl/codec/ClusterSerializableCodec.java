@@ -14,9 +14,6 @@ import org.redisson.client.protocol.Encoder;
 /**
  * A Redisson codec for {@link io.vertx.core.shareddata.ClusterSerializable} shared data.
  *
- * <p><b>Note:</b> The codec need to support the deprecated {@link
- * io.vertx.core.shareddata.impl.ClusterSerializable} until it is removed from Vertx.
- *
  * @author sasjo
  */
 @SuppressWarnings("deprecation")
