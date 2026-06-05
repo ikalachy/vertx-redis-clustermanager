@@ -109,13 +109,16 @@ public class RedisClusterManager implements ClusterManager, NodeInfoCatalogListe
 
   @Override
   public void getLockWithTimeout(String name, long timeout, Completable<Lock> completable) {
-    dataGrid.getLockWithTimeout(name, timeout).onComplete(ar -> {
-      if (ar.succeeded()) {
-        completable.succeed(ar.result());
-      } else {
-        completable.fail(ar.cause());
-      }
-    });
+    dataGrid
+        .getLockWithTimeout(name, timeout)
+        .onComplete(
+            ar -> {
+              if (ar.succeeded()) {
+                completable.succeed(ar.result());
+              } else {
+                completable.fail(ar.cause());
+              }
+            });
   }
 
   @Override
@@ -154,13 +157,14 @@ public class RedisClusterManager implements ClusterManager, NodeInfoCatalogListe
               return null;
             },
             false)
-        .onComplete(ar -> {
-          if (ar.succeeded()) {
-            completable.succeed();
-          } else {
-            completable.fail(ar.cause());
-          }
-        });
+        .onComplete(
+            ar -> {
+              if (ar.succeeded()) {
+                completable.succeed();
+              } else {
+                completable.fail(ar.cause());
+              }
+            });
   }
 
   @Override
@@ -183,13 +187,14 @@ public class RedisClusterManager implements ClusterManager, NodeInfoCatalogListe
               }
             },
             false)
-        .onComplete(ar -> {
-          if (ar.succeeded()) {
-            completable.succeed(ar.result());
-          } else {
-            completable.fail(ar.cause());
-          }
-        });
+        .onComplete(
+            ar -> {
+              if (ar.succeeded()) {
+                completable.succeed(ar.result());
+              } else {
+                completable.fail(ar.cause());
+              }
+            });
   }
 
   @Override
@@ -209,13 +214,14 @@ public class RedisClusterManager implements ClusterManager, NodeInfoCatalogListe
               }
               return null;
             })
-        .onComplete(ar -> {
-          if (ar.succeeded()) {
-            completable.succeed();
-          } else {
-            completable.fail(ar.cause());
-          }
-        });
+        .onComplete(
+            ar -> {
+              if (ar.succeeded()) {
+                completable.succeed();
+              } else {
+                completable.fail(ar.cause());
+              }
+            });
   }
 
   private void createCatalogs(RedissonClient redisson) {
@@ -224,10 +230,14 @@ public class RedisClusterManager implements ClusterManager, NodeInfoCatalogListe
     if (subscriptionCatalog != null) {
       subscriptionCatalog =
           new SubscriptionCatalog(
-              subscriptionCatalog, redisson, redissonContext.keyFactory(), (NodeSelector) registrationListener);
+              subscriptionCatalog,
+              redisson,
+              redissonContext.keyFactory(),
+              (NodeSelector) registrationListener);
     } else {
       subscriptionCatalog =
-          new SubscriptionCatalog(redisson, redissonContext.keyFactory(), (NodeSelector) registrationListener);
+          new SubscriptionCatalog(
+              redisson, redissonContext.keyFactory(), (NodeSelector) registrationListener);
     }
     subscriptionCatalog.removeUnknownSubs(nodeId, nodeInfoCatalog.getNodes());
   }
@@ -315,13 +325,14 @@ public class RedisClusterManager implements ClusterManager, NodeInfoCatalogListe
               }
               return null;
             })
-        .onComplete(ar -> {
-          if (ar.succeeded()) {
-            completable.succeed();
-          } else {
-            completable.fail(ar.cause());
-          }
-        });
+        .onComplete(
+            ar -> {
+              if (ar.succeeded()) {
+                completable.succeed();
+              } else {
+                completable.fail(ar.cause());
+              }
+            });
   }
 
   private void closeCatalogs() {
@@ -344,13 +355,14 @@ public class RedisClusterManager implements ClusterManager, NodeInfoCatalogListe
               return null;
             },
             false)
-        .onComplete(ar -> {
-          if (ar.succeeded()) {
-            completable.succeed();
-          } else {
-            completable.fail(ar.cause());
-          }
-        });
+        .onComplete(
+            ar -> {
+              if (ar.succeeded()) {
+                completable.succeed();
+              } else {
+                completable.fail(ar.cause());
+              }
+            });
   }
 
   @Override
@@ -363,24 +375,28 @@ public class RedisClusterManager implements ClusterManager, NodeInfoCatalogListe
               return null;
             },
             false)
-        .onComplete(ar -> {
-          if (ar.succeeded()) {
-            completable.succeed();
-          } else {
-            completable.fail(ar.cause());
-          }
-        });
+        .onComplete(
+            ar -> {
+              if (ar.succeeded()) {
+                completable.succeed();
+              } else {
+                completable.fail(ar.cause());
+              }
+            });
   }
 
   @Override
   public void getRegistrations(String address, Completable<List<RegistrationInfo>> completable) {
-    vertx.executeBlocking(() -> subscriptionCatalog.get(address), false).onComplete(ar -> {
-      if (ar.succeeded()) {
-        completable.succeed(ar.result());
-      } else {
-        completable.fail(ar.cause());
-      }
-    });
+    vertx
+        .executeBlocking(() -> subscriptionCatalog.get(address), false)
+        .onComplete(
+            ar -> {
+              if (ar.succeeded()) {
+                completable.succeed(ar.result());
+              } else {
+                completable.fail(ar.cause());
+              }
+            });
   }
 
   /**

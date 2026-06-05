@@ -5,7 +5,6 @@ import static com.jayway.awaitility.Awaitility.await;
 import com.retailsvc.vertx.spi.cluster.redis.RedisClusterManagerTestFactory;
 import com.retailsvc.vertx.spi.cluster.redis.RedisTestContainerFactory;
 import io.vertx.core.Future;
-import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.internal.VertxInternal;
 import io.vertx.servicediscovery.ServiceDiscoveryOptions;
@@ -23,10 +22,11 @@ public class ITRedisDiscoveryImplClustered extends DiscoveryImplTestBase {
 
   @Before
   public void beforeEach() {
-    Future<Vertx> future = Vertx.builder()
-        .withClusterManager(RedisClusterManagerTestFactory.newInstance(redis))
-        .buildClustered()
-        .onSuccess(v -> vertx = v);
+    Future<Vertx> future =
+        Vertx.builder()
+            .withClusterManager(RedisClusterManagerTestFactory.newInstance(redis))
+            .buildClustered()
+            .onSuccess(v -> vertx = v);
 
     await().until(future::succeeded);
     await().until(() -> ((VertxInternal) vertx).clusterManager().isActive());
